@@ -11,13 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528205140) do
+ActiveRecord::Schema.define(:version => 20130528210647) do
 
   create_table "players", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                                                                                                                                                                            :null => false
+    t.datetime "updated_at",                                                                                                                                                                                            :null => false
+    t.float    "skill",        :default => 25.0
+    t.float    "doubt",        :default => 8.33333
+    t.integer  "wins",         :default => 0
+    t.integer  "losses",       :default => 0
+    t.integer  "draws",        :default => 0
+    t.string   "expectations", :default => "---\nwin_expectation:\n  wins: 0\n  losses: 0\n  draws: 0\nlost_expectation:\n  wins: 0\n  losses: 0\n  draws: 0\ndraw_expectation:\n  wins: 0\n  losses: 0\n  draws: 0\n"
   end
 
 end

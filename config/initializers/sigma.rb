@@ -1,0 +1,1 @@
+Sigma::SCALE = 50.0
