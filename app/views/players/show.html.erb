@@ -18,13 +18,11 @@
   <dd><%= @player.losses %></dd>
   <dt><strong><%= model_class.human_attribute_name(:draws) %>:</strong></dt>
   <dd><%= @player.draws %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:expectations) %>:</strong></dt>
-  <dd><%= @player.expectations %></dd>
 </dl>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              player_path, :class => 'btn'  %>
+              players_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_player_path(@player), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

@@ -16,6 +16,7 @@ class PlayersController < ApplicationController
       player.lost(difference)
       competitor.won(-difference)
     end
+    redirect_to root_path
   end
 
   # GET /players
