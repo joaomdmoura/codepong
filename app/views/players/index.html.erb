@@ -8,8 +8,7 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:skill) %></th>
-      <th><%= model_class.human_attribute_name(:doubt) %></th>
+      <th><%= model_class.human_attribute_name(:rating) %></th>
       <th><%= model_class.human_attribute_name(:wins) %></th>
       <th><%= model_class.human_attribute_name(:losses) %></th>
       <th><%= model_class.human_attribute_name(:draws) %></th>
@@ -22,20 +21,14 @@
         <td><%= link_to player.id, players_path(player) %></td>
         <td><%= player.name %></td>
         <td><%= player.email %></td>
-        <td><%= player.skill %></td>
-        <td><%= player.doubt %></td>
+        <td><%= (player.rating == 9.999999999621423e-06) ? 0 : player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
         <td><%= player.draws %></td>
         <td>
-          <%= link_to t('.won'),
-                      player_won_path(player), 
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+          <%= link_to t('.match_result'),
+                      player_match_path(player), 
                       :class => 'btn btn-mini' %>
-          <%= link_to t('.lost'),
-                      player_lost_path(player),
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>

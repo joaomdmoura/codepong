@@ -1,4 +1,23 @@
 class PlayersController < ApplicationController
+
+  def match
+    @player = Player.find(params[:id])
+  end
+
+  def match_definition
+    player     = Player.find(params[:player_id])
+    competitor = Player.find(params[:other_player_id])
+    difference = player.rating - competitor.rating
+
+    if params[:commit] == "Won"
+      player.won(difference)
+      competitor.lost(-difference)
+    elsif params[:commit] == "Lost"
+      player.lost(difference)
+      competitor.won(-difference)
+    end
+  end
+
   # GET /players
   # GET /players.json
   def index

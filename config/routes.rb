@@ -2,6 +2,8 @@ Codepong::Application.routes.draw do
   resources :players
 
   root :to => 'players#index'
+  match 'player/match/:id' => 'players#match', :as => :player_match
+  match 'match_definition' => 'players#match_definition', :as => :match_definition
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
