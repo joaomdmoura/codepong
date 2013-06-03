@@ -10,16 +10,17 @@ class PlayersController < ApplicationController
   end
 
   def match_definition
-    player      = Player.find(params[:player_id])
-    competitor  = Player.find(params[:other_player_id])
-    difference  = player.rating - competitor.rating
-    result      = params[:commit].downcase
-    match       = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
-    hash_string = "#{player.id}#{competitor.id}#{difference}#{result}"
-    confirm_url = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
-    giveup_url  = url_for :controller => 'matches', :action => 'give_up', :hash => Base64::encode64("#{hash_string}:give_up:#{match.id}")
+    player            = Player.find(params[:player_id])
+    competitor        = Player.find(params[:other_player_id])
+    difference        = player.rating - competitor.rating
+    result            = params[:commit].downcase
+    competitor_result = (params[:commit].downcase == "Won") ? 'lost' : 'won'
+    match             = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
+    hash_string       = "#{player.id}#{competitor.id}#{difference}#{result}"
+    confirm_url       = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
+    giveup_url        = url_for :controller => 'matches', :action => 'give_up', :hash => Base64::encode64("#{hash_string}:give_up:#{match.id}")
 
-    PlayerMailer.confirm_result(player, competitor, confirm_url, result).deliver
+    PlayerMailer.confirm_result(player, competitor, confirm_url, competitor_result).deliver
     PlayerMailer.give_up(player, competitor, giveup_url, result).deliver
 
     flash[:notice] = 'An email was sent to confirm the match result.'
