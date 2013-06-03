@@ -21,7 +21,7 @@
         <td><%= link_to player.id, players_path(player) %></td>
         <td><%= player.name %></td>
         <td><%= player.email %></td>
-        <td><%= (player.rating == 9.999999999621423e-06) ? 0 : player.rating  %></td>
+        <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
         <td><%= player.draws %></td>
