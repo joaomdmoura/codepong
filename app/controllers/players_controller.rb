@@ -15,8 +15,9 @@ class PlayersController < ApplicationController
     difference  = player.rating - competitor.rating
     result      = params[:commit].downcase
     match       = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
-    confirm_url = url_for :controller => 'matches', :action => 'confirm_result', :id => match.id
-    giveup_url  = url_for :controller => 'matches', :action => 'give_up', :id => match.id
+    hash_string = "#{player.id}#{competitor.id}#{difference}#{result}"
+    confirm_url = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
+    giveup_url  = url_for :controller => 'matches', :action => 'give_up', :hash => Base64::encode64("#{hash_string}:give_up:#{match.id}")
 
     PlayerMailer.confirm_result(player, competitor, confirm_url, result).deliver
     PlayerMailer.give_up(player, competitor, giveup_url, result).deliver

@@ -1,42 +1,59 @@
 class MatchesController < ApplicationController
   def confirm_result
-    match      = Match.find(params[:id])
+    hash       = Base64::decode64(params[:hash]).split(":")
+    command    = hash[1]
+    id         = hash[2].to_i
+    match      = Match.find(id)
     player     = Player.find(match.player_id)
     competitor = Player.find(match.competitor_id)
     difference = match.difference
     result     = match.result
 
-    if !match.confirmed
-      if result == "won"
-        player.won(difference)
-        competitor.lost(-difference)
-      elsif result == "lost"
-        player.lost(difference)
-        competitor.won(-difference)
-      end
-      
-      match.update_attributes confirmed:true
-
-      flash[:notice] = 'The match result was confirmed'
+    if command != 'confirm_result'
+      flash[:error] = 'Wrong URL.'
+      redirect_to root_path
     else
-      flash[:notice] = 'The other player gave up of this match result.'
+      if !match.confirmed
+        if result == "won"
+          player.won(difference)
+          competitor.lost(-difference)
+        elsif result == "lost"
+          player.lost(difference)
+          competitor.won(-difference)
+        end
+
+        match.update_attributes confirmed:true
+
+        flash[:notice] = 'The match result was confirmed'
+      else
+        flash[:error] = 'The result of this match was already defined.'
+      end
+      redirect_to root_path
     end
-    redirect_to root_path
   end
 
   def give_up
-    match      = Match.find(params[:id])
+    hash       = Base64::decode64(params[:hash]).split(":")
+    command    = hash[1]
+    id         = hash[2].to_i
+    match      = Match.find(id)
     player     = Player.find(match.player_id)
     competitor = Player.find(match.competitor_id)
     difference = match.difference
     result     = match.result
-    if !match.confirmed
-      match.update_attributes confirmed:true
-      flash[:notice] = 'The match result was canceled'
+
+    if command != 'give_up'
+      flash[:error] = 'Wrong URL.'
+      redirect_to root_path
     else
-      flash[:notice] = 'The match result already was confirmed by your competitor'
+      if !match.confirmed
+        match.update_attributes confirmed:true
+        flash[:notice] = 'The match result was canceled'
+      else
+        flash[:error] = 'The result of this match was already defined'
+      end
+      redirect_to root_path
     end
-    redirect_to root_path
   end
 
   def create

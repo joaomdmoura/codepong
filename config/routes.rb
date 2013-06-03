@@ -6,8 +6,8 @@ Codepong::Application.routes.draw do
   root :to => 'players#index'
   match 'player/match/:id' => 'players#match', :as => :player_match
   match 'match_definition' => 'players#match_definition', :as => :match_definition
-  match 'match/confirm/:id' => 'matches#confirm_result', :as => :confirm_match
-  match 'match/give_up/:id' => 'matches#give_up', :as => :give_up_match
+  match 'match/confirm/:hash' => 'matches#confirm_result', :as => :confirm_match
+  match 'match/give_up/:hash' => 'matches#give_up', :as => :give_up_match
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
