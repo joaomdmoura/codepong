@@ -10,7 +10,6 @@
       <th><%= model_class.human_attribute_name(:rating) %></th>
       <th><%= model_class.human_attribute_name(:wins) %></th>
       <th><%= model_class.human_attribute_name(:losses) %></th>
-      <th><%= model_class.human_attribute_name(:draws) %></th>
       <th><%=t '.match' %></th>
     </tr>
   </thead>
@@ -22,7 +21,6 @@
         <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
-        <td><%= player.draws %></td>
         <td>
           <%= link_to t('.match_result'),
                       player_match_path(player), 

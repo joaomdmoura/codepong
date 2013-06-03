@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  player_id: 1
+  competitor_id: 1
+  confirmed: false
+  result: MyString
+
+two:
+  player_id: 1
+  competitor_id: 1
+  confirmed: false
+  result: MyString

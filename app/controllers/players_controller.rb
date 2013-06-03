@@ -2,20 +2,26 @@ class PlayersController < ApplicationController
 
   def match
     @player = Player.find(params[:id])
+    matches = Match.where("player_id = #{@player.id} AND confirmed = 0 OR competitor_id = #{@player.id} AND confirmed = 0")
+    if !matches.empty?
+      flash[:notice] = 'You still have old matches not confirmed, please confirm or give up before start a new one.'
+      redirect_to root_path
+    end
   end
 
   def match_definition
-    player     = Player.find(params[:player_id])
-    competitor = Player.find(params[:other_player_id])
-    difference = player.rating - competitor.rating
+    player      = Player.find(params[:player_id])
+    competitor  = Player.find(params[:other_player_id])
+    difference  = player.rating - competitor.rating
+    result      = params[:commit].downcase
+    match       = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
+    confirm_url = url_for :controller => 'matches', :action => 'confirm_result', :id => match.id
+    giveup_url  = url_for :controller => 'matches', :action => 'give_up', :id => match.id
 
-    if params[:commit] == "Won"
-      player.won(difference)
-      competitor.lost(-difference)
-    elsif params[:commit] == "Lost"
-      player.lost(difference)
-      competitor.won(-difference)
-    end
+    PlayerMailer.confirm_result(player, competitor, confirm_url, result).deliver
+    PlayerMailer.give_up(player, competitor, giveup_url, result).deliver
+
+    flash[:notice] = 'An email was sent to confirm the match result.'
     redirect_to root_path
   end
 
