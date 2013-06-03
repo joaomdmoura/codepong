@@ -2,8 +2,8 @@ class Player < ActiveRecord::Base
   attr_accessible :skill, :doubt, :wins, :losses, :draws, :expectations, :email, :name
   serialize :expectations
 
-  scope :ranking, select("#{self.name.pluralize}.*")
-    .select("(#{self.name.pluralize}.skill - 3 * #{self.name.pluralize}.doubt) as rating")
+  scope :ranking, select("#{self.name.pluralize.downcase}.*")
+    .select("(#{self.name.pluralize.downcase}.skill - 3 * #{self.name.pluralize.downcase}.doubt) as rating")
     .order("rating DESC")
 
   def rating
