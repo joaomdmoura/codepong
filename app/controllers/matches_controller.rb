@@ -30,10 +30,12 @@ class MatchesController < ApplicationController
     competitor = Player.find(match.competitor_id)
     difference = match.difference
     result     = match.result
-    
-    match.update_attributes confirmed:true
-
-    flash[:notice] = 'The match result was canceled'
+    if !match.confirmed
+      match.update_attributes confirmed:true
+      flash[:notice] = 'The match result was canceled'
+    else
+      flash[:notice] = 'The match result already was confirmed by your competitor'
+    end
     redirect_to root_path
   end
 
