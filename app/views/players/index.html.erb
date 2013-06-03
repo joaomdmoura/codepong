@@ -7,7 +7,6 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:email) %></th>
       <th><%= model_class.human_attribute_name(:rating) %></th>
       <th><%= model_class.human_attribute_name(:wins) %></th>
       <th><%= model_class.human_attribute_name(:losses) %></th>
@@ -20,7 +19,6 @@
       <tr>
         <td><%= link_to player.id, players_path(player) %></td>
         <td><%= player.name %></td>
-        <td><%= player.email %></td>
         <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
