@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:postion) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:rating) %></th>
       <th><%= model_class.human_attribute_name(:wins) %></th>
@@ -14,9 +14,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @players.each do |player| %>
+    <% @players.each_with_index do |player, index| %>
       <tr>
-        <td><%= link_to player.id, players_path(player) %></td>
+        <td><%= index + 1 %></td>
         <td><%= player.name %></td>
         <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
@@ -31,6 +31,7 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<%= link_to t('Register'),
             new_player_path,
-            :class => 'btn btn-primary' %>
+            :class => 'btn btn-primary',
+            :style => 'width:200px' %>

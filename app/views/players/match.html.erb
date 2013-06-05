@@ -6,9 +6,10 @@
     <%= hidden_field_tag(:player_id, @player.id) %>
     <%= select_tag(:other_player_id, options_from_collection_for_select(Player.all, :id, :name)) %>
     <br /><br />
-  </div>
-  <div class="form-actions">
-    <%= submit_tag 'Won', :class => 'btn' %>
-    <%= submit_tag 'Lost', :class => 'btn btn-danger' %>
+
+    <div class="form-actions">
+      <%= submit_tag 'Won', :class => 'btn' %>
+      <%= submit_tag 'Lost', :class => 'btn btn-danger' %>
+    </div>
   </div>
 <% end %>

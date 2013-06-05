@@ -14,7 +14,7 @@ class PlayersController < ApplicationController
     competitor        = Player.find(params[:other_player_id])
     difference        = player.rating - competitor.rating
     result            = params[:commit].downcase
-    competitor_result = (params[:commit].downcase == "Won") ? 'lost' : 'won'
+    competitor_result = (result == "won") ? 'lost' : 'won'
     match             = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
     hash_string       = "#{player.id}#{competitor.id}#{difference}#{result}"
     confirm_url       = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
