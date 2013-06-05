@@ -5,12 +5,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:postion) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:rating) %></th>
-      <th><%= model_class.human_attribute_name(:wins) %></th>
-      <th><%= model_class.human_attribute_name(:losses) %></th>
-      <th><%=t '.match' %></th>
+      <th>&nbsp;</th>
+      <th>Nome</th>
+      <th>R</th>
+      <th>V</th>
+      <th>D</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +22,7 @@
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
         <td>
-          <%= link_to t('.match_result'),
+          <%= link_to '+ resultado',
                       player_match_path(player), 
                       :class => 'btn btn-mini' %>
         </td>
@@ -31,7 +31,3 @@
   </tbody>
 </table>
 
-<%= link_to t('Register'),
-            new_player_path,
-            :class => 'btn btn-primary',
-            :style => 'width:200px' %>

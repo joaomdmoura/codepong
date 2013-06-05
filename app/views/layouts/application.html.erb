@@ -35,39 +35,26 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
+    <header id="app-header">
+      <h1><%= image_tag("codepong.jpg") %></h1>
+    </header>
 
-    <div class="navbar navbar-fluid-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">Codepong</a>
-          <div class="container-fluid nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "MOVIMENTO", "http://www.movimento.us"  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+    <nav id="app-nav">
+      <a class="btn btn-info" href="/">Ranking</a>
+      <%= link_to 'Participe',
+                  new_player_path,
+                  :class => 'btn btn-info' %>
+      <a class="btn btn-primary" href="http://movimento.us">O MOVIMENTO</a>
+    </nav>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span9" style="width:100%;text-align:center">
-          <%= bootstrap_flash %>
-          <%= yield %>
-        </div>
-      </div><!--/row-->
-      <br />
-      <footer style='text-align:center'>
-        <%= image_tag("fairplay.jpg") %>
-        <p>&copy; MOVIMENTO 2013</p>
-      </footer>
-
+    <div id="ranking" class="content container-fluid">
+      <%= bootstrap_flash %>
+      <%= yield %>
     </div> <!-- /container -->
+
+    <footer id="app-footer">
+      <%= image_tag("fairplay.jpg") %>
+    </footer>
 
     <!-- Javascripts
     ================================================== -->
