@@ -56,6 +56,20 @@ class MatchesController < ApplicationController
     end
   end
 
+  def show
+    @player  = Player.find(params[:id])
+    @matches = Match.where("player_id = #{@player.id} OR competitor_id = #{@player.id}")
+  end
+
+  def denounce
+    match      = Match.find(params[:id])
+    player     = Player.find(match.player_id)
+    competitor = Player.find(match.competitor_id)
+    PlayerMailer.denounce(player, competitor, match).deliver
+    flash[:error] = 'The denounce was made, we will check it as soon as possible'
+    redirect_to root_path
+  end
+
   def create
     @match = Match.new(params[:match])
 

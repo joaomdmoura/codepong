@@ -1,25 +1,36 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Player:</b>
-  <%= @match.player_id %>
-</p>
-
-<p>
-  <b>Competitor:</b>
-  <%= @match.competitor_id %>
-</p>
-
-<p>
-  <b>Confirmed:</b>
-  <%= @match.confirmed %>
-</p>
-
-<p>
-  <b>Result:</b>
-  <%= @match.result %>
-</p>
-
-
-<%= link_to 'Edit', edit_match_path(@match) %> |
-<%= link_to 'Back', matches_path %>
+<%- model_class = Player -%>
+<div class="page-header">
+  <h1>Matches of <%= @player.name %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Player 1</th>
+      <th>Player 2</th>
+      <th>Date</th>
+      <th>Result</th>
+      <th>Confirmed</th>
+      <th><%=t '.denounce' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @matches.each do |match| %>
+      <tr>
+      	<% 
+      	player1 = Player.find(match.player_id)
+      	player2 = Player.find(match.competitor_id)
+      	%>
+        <td><%= player1.name %></td>
+        <td><%= player2.name %></td>
+        <td><%= match.created_at.strftime("%m/%d/%Y at %I:%M%p") %></td>
+        <td><%= "#{player1.name} #{match.result}" %></td>
+        <td><%= match.confirmed %></td>
+        <td>
+          <%= link_to t('Denounce Match'),
+                      denounce_match_path(match), 
+                      :class => 'btn btn-mini' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

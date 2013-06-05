@@ -1,6 +1,7 @@
 <%- model_class = Player -%>
 <div class="page-header">
   <h1>Ranking</h1>
+  <pre>Click on match result at your name row<br />Click on the player name to see the matches</pre>
 </div>
 <table class="table table-striped">
   <thead>
@@ -16,8 +17,8 @@
   <tbody>
     <% @players.each_with_index do |player, index| %>
       <tr>
-        <td><%= index + 1 %></td>
-        <td><%= player.name %></td>
+        <td><%= (index+1) %></td>
+        <td><%= link_to player.name, player_macthes_path(player) %></td>
         <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
