@@ -3,13 +3,12 @@ Codepong::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtpout.secureserver.net",
-    :port                 => 80,
-    :domain               => 'movimento.us',
+    :port                 => 25,
+    :domain               => 'MOVIMENTO.US',
     :user_name            => 'info@movimento.us',
-    :password             => '<password>',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
-
+    :password             => 'MOVIMENTO',
+    :authentication       => 'plain'
+    }
   # Code is not reloaded between requests
   config.cache_classes = true
 
