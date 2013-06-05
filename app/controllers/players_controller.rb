@@ -30,7 +30,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.ranking
+    @players = Player.ranking.where('wins != 0 or losses != 0')
 
     respond_to do |format|
       format.html # index.html.erb
