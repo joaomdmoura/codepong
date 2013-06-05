@@ -1,7 +1,7 @@
 <%- model_class = Player -%>
 <div class="page-header">
   <h1>Ranking</h1>
-  <pre>Click on match result at your name row<br />Click on the player name to see the matches</pre>
+  <pre>Click on match result at your name row only<br />Click on the player name to see the matches</pre>
 </div>
 <table class="table table-striped">
   <thead>
@@ -11,6 +11,7 @@
       <th>R</th>
       <th>V</th>
       <th>D</th>
+      <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -23,9 +24,14 @@
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
         <td>
+          <%= link_to t('.challenge'),
+              challenge_player_path(player), 
+              :class => 'btn btn-mini btn-danger' %>
+        </td>
+        <td>
           <%= link_to '+ resultado',
-                      player_match_path(player), 
-                      :class => 'btn btn-mini' %>
+            player_match_path(player), 
+            :class => 'btn btn-mini' %>
         </td>
       </tr>
     <% end %>

@@ -58,7 +58,7 @@ class MatchesController < ApplicationController
 
   def show
     @player  = Player.find(params[:id])
-    @matches = Match.where("player_id = #{@player.id} OR competitor_id = #{@player.id}")
+    @matches = Match.where("player_id = #{@player.id} OR competitor_id = #{@player.id}").order('created_at DESC')
   end
 
   def denounce

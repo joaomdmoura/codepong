@@ -10,6 +10,7 @@ Codepong::Application.routes.draw do
   match 'match/give_up/:hash' => 'matches#give_up', :as => :give_up_match
   match 'matches/player/:id' => 'matches#show', :as => :player_macthes
   match 'matches/denounce/:id' => 'matches#denounce', :as => :denounce_match
+  match 'player/challenge/:id' => 'players#challenge', :as => :challenge_player
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
