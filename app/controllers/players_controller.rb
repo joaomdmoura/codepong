@@ -31,7 +31,7 @@ class PlayersController < ApplicationController
   # GET /players.json
   def index
     @players                = Player.ranking.where('wins != 0 or losses != 0')
-    players_without_matches = Player.where('wins = 0 or losses = 0')
+    players_without_matches = Player.where('wins = 0 and losses = 0')
     @players.concat players_without_matches
 
     respond_to do |format|
