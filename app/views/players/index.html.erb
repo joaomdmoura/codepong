@@ -10,9 +10,9 @@
     <tr>
       <th>&nbsp;</th>
       <th>Nome</th>
-      <th>R</th>
-      <th>V</th>
-      <th>D</th>
+      <th class="rvd">R</th>
+      <th class="rvd">V</th>
+      <th class="rvd">D</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -22,9 +22,9 @@
       <tr>
         <td><%= (index+1) %></td>
         <td><%= link_to player.name, player_macthes_path(player) %></td>
-        <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
-        <td><%= player.wins %></td>
-        <td><%= player.losses %></td>
+        <td class="rvd"><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
+        <td class="rvd"><%= player.wins %></td>
+        <td class="rvd"><%= player.losses %></td>
         <td>
           <%= link_to t('.challenge'),
             challenge_player_path(player), 
