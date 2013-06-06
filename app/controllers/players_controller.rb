@@ -12,18 +12,40 @@ class PlayersController < ApplicationController
   def match_definition
     player            = Player.find(params[:player_id])
     competitor        = Player.find(params[:other_player_id])
-    difference        = player.rating - competitor.rating
-    result            = params[:commit].downcase
-    competitor_result = (result == "won") ? 'lost' : 'won'
-    match             = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
-    hash_string       = "#{player.id}#{competitor.id}#{difference}#{result}"
-    confirm_url       = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
-    giveup_url        = url_for :controller => 'matches', :action => 'give_up', :hash => Base64::encode64("#{hash_string}:give_up:#{match.id}")
 
-    PlayerMailer.confirm_result(player, competitor, confirm_url, competitor_result).deliver
-    PlayerMailer.give_up(player, competitor, giveup_url, result).deliver
+    if (player.position - competitor.position).abs < 4
+      difference        = player.rating - competitor.rating
+      result            = params[:commit].downcase
+      competitor_result = (result == "won") ? 'lost' : 'won'
+      match             = Match.create player_id:player.id, difference:difference, competitor_id:competitor.id,  result:result, confirmed:false
+      hash_string       = "#{player.id}#{competitor.id}#{difference}#{result}"
+      confirm_url       = url_for :controller => 'matches', :action => 'confirm_result', :hash => Base64::encode64("#{hash_string}:confirm_result:#{match.id}")
+      giveup_url        = url_for :controller => 'matches', :action => 'give_up', :hash => Base64::encode64("#{hash_string}:give_up:#{match.id}")
 
-    flash[:notice] = 'An email was sent to confirm the match result.'
+      PlayerMailer.confirm_result(player, competitor, confirm_url, competitor_result).deliver
+      PlayerMailer.give_up(player, competitor, giveup_url, result).deliver
+
+      flash[:notice] = 'An email was sent to confirm the match result.'
+    else
+      flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
+    end
+    redirect_to root_path
+  end
+
+  def challenge
+    @player = Player.find(params[:id])
+  end
+
+  def challenge_defined
+    player            = Player.find(params[:player_id])
+    competitor        = Player.find(params[:other_player_id])
+
+    if (player.position - competitor.position).abs < 4
+      PlayerMailer.challenge(player, competitor).deliver
+      flash[:notice] = 'The user was challenged.'
+    else
+      flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
+    end
     redirect_to root_path
   end
 

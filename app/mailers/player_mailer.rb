@@ -23,4 +23,10 @@ class PlayerMailer < ActionMailer::Base
     @match   = match
     mail(:to => 'joaomdmoura@gmail.com', :subject => "Match denounced")
   end
+
+  def challenge(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    mail(:to => @player1.email, :subject => "You was challenged!")
+  end
 end

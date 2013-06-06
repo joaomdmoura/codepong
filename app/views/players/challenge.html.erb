@@ -1,0 +1,51 @@
+<%= form_tag "/match_challenge", :method => "post", :class => 'form-chalenge' do %>
+  <%- model_class = Player -%>
+  <div class="page-header">
+    <h1>Desafio</h1>
+    <hr>
+    <figure class="player challenger">
+      <img src="http://gravatar.com/avatar/<%= Digest::MD5.hexdigest(@player.email) %>" alt="<%= @player.name %>">
+      <figcaption><%= @player.name %></figcaption>   
+      <%= hidden_field_tag(:player_id, @player.id) %>
+    </figure>
+
+    <h2>É desafiado por:</h2>
+
+    <div class="other-players">
+      <% Player.where("id != #{@player.id}").each do |p| %>
+        <figure class="player">
+          <label for="player-<%= p.id %>">
+            <img src="http://gravatar.com/avatar/<%= Digest::MD5.hexdigest(p.email) %>" alt="<%= p.name %>">
+            <figcaption><%= p.name %></figcaption>   
+            <input type="radio" name="other_player_id" id="player-<%= p.id %>" value="<%= p.id %>">
+          </label>
+        </figure>
+      <% end %>
+    </div>
+
+    <div class="form-actions">
+      <%= submit_tag 'Desafiar', :class => 'btn btn-danger' %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function() {
+      var $players = $(".form-chalenge .other-players .player input");
+      var $otherPlayers = $(".form-chalenge .other-players"); 
+
+      $players.each(function(index, input) {
+        var $input = $(input);
+        var $label = $input.parent();
+        var $figure = $label.parent();
+
+        $(input).on("change", function(e) {
+          $players.parent().parent().hide();
+          $figure.show();
+          $otherPlayers.addClass("choosen");
+        });
+      });
+    });
+  </script>
+<% end %>

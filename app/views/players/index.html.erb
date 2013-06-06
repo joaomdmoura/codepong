@@ -14,6 +14,7 @@
       <th>V</th>
       <th>D</th>
       <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,11 @@
         <td><%= (player.rating == 9.999999999621423e-06) ? 0 : '%.4f' % player.rating  %></td>
         <td><%= player.wins %></td>
         <td><%= player.losses %></td>
+        <td>
+          <%= link_to t('.challenge'),
+            challenge_player_path(player), 
+            :class => 'btn btn-mini btn-danger' %>
+        </td>
         <td>
           <%= link_to '+ resultado',
             player_match_path(player), 
