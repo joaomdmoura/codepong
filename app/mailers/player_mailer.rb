@@ -4,7 +4,7 @@ class PlayerMailer < ActionMailer::Base
   def confirm_result(sender, reciever, url, result)
     @reciever = reciever
     @sender   = sender
-    @result   = result
+    @result   = (result == 'won') ? 'ganhou' : 'perdeu'
     @url      = url
     mail(:to => @reciever.email, :subject => "Confirm Match Result")
   end
@@ -12,7 +12,7 @@ class PlayerMailer < ActionMailer::Base
   def give_up(sender, reciever, url, result)
     @reciever = reciever
     @sender   = sender
-    @result   = result
+    @result   = (result == 'won') ? 'ganhou' : 'perdeu'
     @url      = url
     mail(:to => @sender.email, :subject => "Give up Match Result")
   end
