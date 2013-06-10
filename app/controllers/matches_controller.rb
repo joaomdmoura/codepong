@@ -14,6 +14,8 @@ class MatchesController < ApplicationController
       redirect_to root_path
     else
       if !match.confirmed
+        Codepong::USER_UPDATES_LOG.info "================================================="
+        Codepong::USER_UPDATES_LOG.info "match_id: #{match.id}"
         if result == "won"
           player.won(difference)
           competitor.lost(-difference)

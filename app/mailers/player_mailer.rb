@@ -6,7 +6,7 @@ class PlayerMailer < ActionMailer::Base
     @sender   = sender
     @result   = (result == 'won') ? 'ganhou' : 'perdeu'
     @url      = url
-    mail(:to => @reciever.email, :subject => "Confirm Match Result")
+    mail(:to => @reciever.email, :subject => "Confirme o resultado")
   end
 
   def give_up(sender, reciever, url, result)
@@ -14,19 +14,19 @@ class PlayerMailer < ActionMailer::Base
     @sender   = sender
     @result   = (result == 'won') ? 'ganhou' : 'perdeu'
     @url      = url
-    mail(:to => @sender.email, :subject => "Give up Match Result")
+    mail(:to => @sender.email, :subject => "Desistir do resultado?")
   end
 
   def denounce(player1, player2, match)
     @player1 = player1
     @player2 = player2
     @match   = match
-    mail(:to => 'joaomdmoura@gmail.com', :subject => "Match denounced")
+    mail(:to => 'joaomdmoura@gmail.com', :subject => "Partida Denunciada")
   end
 
   def challenge(player1, player2)
     @player1 = player1
     @player2 = player2
-    mail(:to => @player1.email, :subject => "You was challenged!")
+    mail(:to => @player1.email, :subject => "Te chamaram para treta!")
   end
 end

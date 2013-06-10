@@ -58,5 +58,6 @@ module Codepong
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    Codepong::USER_UPDATES_LOG = Logger.new('log/user_updates.log')
   end
 end

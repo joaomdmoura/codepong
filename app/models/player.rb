@@ -19,8 +19,26 @@ class Player < ActiveRecord::Base
   end
 
   def won(match_difficult)
+    Codepong::USER_UPDATES_LOG.info "New result being processed to #{self.name}, ID: #{self.id}"
+    Codepong::USER_UPDATES_LOG.info "- WON"
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"
+    Codepong::USER_UPDATES_LOG.info "User data:"
+    Codepong::USER_UPDATES_LOG.info "Skill: #{self.skill}"
+    Codepong::USER_UPDATES_LOG.info "Doubt: #{self.doubt}"
+    Codepong::USER_UPDATES_LOG.info "Rating: #{self.rating}"
+    Codepong::USER_UPDATES_LOG.error "ERROR 15" if self.rating > 15.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 25" if self.rating > 25.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 50" if self.rating > 50.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 100" if self.rating > 100.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 1000" if self.rating > 1000.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 10000" if self.rating > 10000.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 100000" if self.rating > 100000.0
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"    
+    Codepong::USER_UPDATES_LOG.info "Match data:"
+    Codepong::USER_UPDATES_LOG.info "difficult: #{match_difficult}"
+    
     define_match_data(match_difficult)
-
+    
     if @expectation == true
       skill_won = self.skill/@alpha.abs/Sigma::SCALE/(Sigma::SCALE+@difficult/@alpha.abs)
     else
@@ -34,6 +52,24 @@ class Player < ActiveRecord::Base
   end
 
   def lost(match_difficult)
+    Codepong::USER_UPDATES_LOG.info "New result being processed to #{self.name}, ID: #{self.id}"
+    Codepong::USER_UPDATES_LOG.info "- LOST"
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"
+    Codepong::USER_UPDATES_LOG.info "User data:"
+    Codepong::USER_UPDATES_LOG.info "Skill: #{self.skill}"
+    Codepong::USER_UPDATES_LOG.info "Doubt: #{self.doubt}"
+    Codepong::USER_UPDATES_LOG.info "Rating: #{self.rating}"
+    Codepong::USER_UPDATES_LOG.error "ERROR 15" if self.rating > 15.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 25" if self.rating > 25.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 50" if self.rating > 50.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 100" if self.rating > 100.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 1000" if self.rating > 1000.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 10000" if self.rating > 10000.0
+    Codepong::USER_UPDATES_LOG.error "ERROR 100000" if self.rating > 100000.0
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"
+    Codepong::USER_UPDATES_LOG.info "Match data:"
+    Codepong::USER_UPDATES_LOG.info "difficult: #{match_difficult}"
+
     define_match_data(match_difficult)
 
     if !@expectation
@@ -59,6 +95,12 @@ class Player < ActiveRecord::Base
       @difficult = difficult.abs
     end
     @alpha = @difficult / Sigma::SCALE
+    Codepong::USER_UPDATES_LOG.info "real_difficult: #{@difficult}"
+    Codepong::USER_UPDATES_LOG.info "expectation: #{@expectation}"
+    Codepong::USER_UPDATES_LOG.info "resource_probability: #{@resource_probability}"
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"
+    Codepong::USER_UPDATES_LOG.info "Variables data:"
+    Codepong::USER_UPDATES_LOG.info "alpha: #{@alpha}"
   end
 
   def update_sigma(exp)
@@ -76,6 +118,12 @@ class Player < ActiveRecord::Base
       salpha     = @resource_probability * @alpha
       self.doubt = self.doubt + self.doubt * salpha
     end
+    Codepong::USER_UPDATES_LOG.info "salpha: #{salpha}"
+    Codepong::USER_UPDATES_LOG.info "-------------------------------------------------"
+    Codepong::USER_UPDATES_LOG.info "New User data:"
+    Codepong::USER_UPDATES_LOG.info "Skill: #{self.skill}"
+    Codepong::USER_UPDATES_LOG.info "Doubt: #{self.doubt}"
+    Codepong::USER_UPDATES_LOG.info "================================================="
   end
 
   def probability(expectation)
