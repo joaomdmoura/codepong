@@ -13,7 +13,7 @@ class PlayersController < ApplicationController
     player            = Player.find(params[:player_id])
     competitor        = Player.find(params[:other_player_id])
 
-    if (player.position - competitor.position).abs < 4
+    if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 6 || competitor.matches == 0 && (player.position - competitor.position).abs < 6 
       difference        = player.rating - competitor.rating
       result            = params[:commit].downcase
       competitor_result = (result == "won") ? 'lost' : 'won'
@@ -40,7 +40,7 @@ class PlayersController < ApplicationController
     player            = Player.find(params[:player_id])
     competitor        = Player.find(params[:other_player_id])
 
-    if (player.position - competitor.position).abs < 4
+    if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 6 || competitor.matches == 0 && (player.position - competitor.position).abs < 6 
       PlayerMailer.challenge(player, competitor).deliver
       flash[:notice] = 'The user was challenged.'
     else
