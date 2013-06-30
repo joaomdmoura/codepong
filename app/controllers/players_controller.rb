@@ -13,7 +13,7 @@ class PlayersController < ApplicationController
     player            = Player.find(params[:player_id])
     competitor        = Player.find(params[:other_player_id])
 
-    if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 7 || competitor.matches == 0 && (player.position - competitor.position).abs < 7 
+    # if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 7 || competitor.matches == 0 && (player.position - competitor.position).abs < 7 
       difference        = player.rating - competitor.rating
       result            = params[:commit].downcase
       competitor_result = (result == "won") ? 'lost' : 'won'
@@ -26,9 +26,9 @@ class PlayersController < ApplicationController
       PlayerMailer.give_up(player, competitor, giveup_url, result).deliver
 
       flash[:notice] = 'An email was sent to confirm the match result.'
-    else
-      flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
-    end
+    # else
+      # flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
+    # end
     redirect_to root_path
   end
 
@@ -40,12 +40,12 @@ class PlayersController < ApplicationController
     player            = Player.find(params[:player_id])
     competitor        = Player.find(params[:other_player_id])
 
-    if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 7 || competitor.matches == 0 && (player.position - competitor.position).abs < 7
+    # if (player.position - competitor.position).abs < 4 || player.matches == 0 && (player.position - competitor.position).abs < 7 || competitor.matches == 0 && (player.position - competitor.position).abs < 7
       PlayerMailer.challenge(player, competitor).deliver
       flash[:notice] = 'The user was challenged.'
-    else
-      flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
-    end
+    # else
+      # flash[:error] = 'You can not play agains a player that is more than 4 positions far of yours.'
+    # end
     redirect_to root_path
   end
 
